@@ -635,7 +635,7 @@ $section->addInput(new Form_Checkbox(
  foreach (config_get_path('cert', []) as $cert) {
 	$ldapClientCertRef[$cert['refid']] = $cert['descr'];
  }
- 
+
  $group = new Form_Group('Client TLS Certificate');
  $group->addClass('mtls');
 
@@ -1133,8 +1133,8 @@ events.push(function() {
 	});
 
 	$('#ldap_mtls_enabled').click(function () {
-               hideClass('mtls', !this.checked);
-       });
+		hideClass('mtls', !this.checked);
+	});
 
 	$('#ldap_rfc2307').click(function () {
 		hideClass('ldap_rfc2307_userdn', !this.checked);
