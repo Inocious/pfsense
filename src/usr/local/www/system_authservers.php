@@ -639,7 +639,7 @@ $section->addInput(new Form_Checkbox(
  $group = new Form_Group('Client TLS Certificate');
  $group->addClass('mtls');
 
- $group->addInput(new Form_Select(
+ $group->add(new Form_Select(
 	'ldap_clientcert',
 	'Client TLS Certificate',
 	$pconfig['ldap_clientcert'],
