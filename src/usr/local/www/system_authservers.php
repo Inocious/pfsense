@@ -327,9 +327,9 @@ if ($_POST['save']) {
 			if (!empty($pconfig['ldap_caref'])) {
 				$server['ldap_caref'] = $pconfig['ldap_caref'];
 			}
-#			if (!empty($pconfig['ldap_clientcert'])) {
-#				$server['ldap_clientcert'] = $pconfig['ldap_clientcert'];
-#			}
+			if (!empty($pconfig['ldap_clientcert'])) {
+				$server['ldap_clientcert'] = $pconfig['ldap_clientcert'];
+			}
 			$server['host'] = $pconfig['ldap_host'];
 			$server['ldap_port'] = $pconfig['ldap_port'];
 			$server['ldap_urltype'] = $pconfig['ldap_urltype'];
@@ -337,7 +337,6 @@ if ($_POST['save']) {
 			$server['ldap_scope'] = $pconfig['ldap_scope'];
 			$server['ldap_basedn'] = $pconfig['ldap_basedn'];
 			$server['ldap_mtls_enabled'] = $pconfig['ldap_mtls_enabled'];
-			$server['ldap_clientcert'] = $pconfig['ldap_clientcert'];
 			$server['ldap_authcn'] = $pconfig['ldapauthcontainers'];
 			$server['ldap_extended_enabled'] = $pconfig['ldap_extended_enabled'];
 			$server['ldap_extended_query'] = $pconfig['ldap_extended_query'];
