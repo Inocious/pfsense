@@ -636,10 +636,10 @@ $section->addInput(new Form_Checkbox(
 	$ldapClientCertRef[$cert['refid']] = $cert['descr'];
  }
 
- $group = new Form_Select('Client TLS Certificate');
+ $group = new Form_Group('Client TLS Certificate');
  $group->addClass('mtls');
 
- $section->addInput(new Form_Select(
+ $group->addInput(new Form_Select(
 	'ldap_clientcert',
 	'Client TLS Certificate',
 	$pconfig['ldap_clientcert'],
