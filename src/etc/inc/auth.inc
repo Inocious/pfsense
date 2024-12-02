@@ -1534,10 +1534,10 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		$ldapbasedn = $authcfg['ldap_basedn'];
 		$ldapbindun = $authcfg['ldap_binddn'];
 		$ldapbindpw = $authcfg['ldap_bindpw'];
-        $ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
-        if ($ldapmtlsenabled) {
-                $ldapclientcert = $authcfg['ldap_clientcert'];
-        }
+		$ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
+		if ($ldapmtlsenabled) {
+			$ldapclientcert = $authcfg['ldap_clientcert'];
+		}
 		if (empty($ldapbindun) || empty($ldapbindpw)) {
 			$ldapanon = true;
 		} else {
@@ -1579,7 +1579,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		log_error(sprintf(gettext("LDAP Debug: Attempting to authenticate %s on %s"), $username, $ldapname));
 		log_error(sprintf(gettext("LDAP Debug: URI: %s (v%s)"), $ldapserver, $ldapver));
 		log_error(sprintf(gettext("LDAP Debug: Base DN: %s"), $ldapbasedn));
-        //TODO ldapclientcert doesn't represent the filename. Will fail.
+		//TODO ldapclientcert doesn't represent the filename. Will fail.
         log_error(sprintf(gettext("LDAP Debug: Client LDAPTLS_CERT: %s"), $ldapclientcert));
 		log_error(sprintf(gettext("LDAP Debug: Scope: %s"), $ldapscope));
 		log_error(sprintf(gettext("LDAP Debug: Auth Bind DN: %s"), $ldapbindun));
@@ -2435,11 +2435,11 @@ EOD;
 					@file_put_contents($ldappamcafile, $cacrt);
 					$ldapconf .= "tls_cacertfile {$ldappamcafile}\n";
 				}
-                //TODO retrieve filename, $authcfg['ldap_clientkey']} is incorrect. Will fail.
-                if (!empty($authcfg['ldap_clientcert'])) {
-                        $ldapconf .= "tls_cert {$authcfg['ldap_clientcert']}\n";
-                        $ldapconf .= "tls_key {$authcfg['ldap_clientkey']}\n";
-                }
+				//TODO retrieve filename, $authcfg['ldap_clientkey']} is incorrect. Will fail.
+				if (!empty($authcfg['ldap_clientcert'])) {
+					$ldapconf .= "tls_cert {$authcfg['ldap_clientcert']}\n";
+					$ldapconf .= "tls_key {$authcfg['ldap_clientkey']}\n";
+				}
 				$ldapconf .= "tls_checkpeer yes\n";
 			}
 			$ldapconf .= "ldap_version {$authcfg['ldap_protver']}\n";
