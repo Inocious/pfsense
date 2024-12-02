@@ -1580,7 +1580,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		log_error(sprintf(gettext("LDAP Debug: URI: %s (v%s)"), $ldapserver, $ldapver));
 		log_error(sprintf(gettext("LDAP Debug: Base DN: %s"), $ldapbasedn));
 		//TODO ldapclientcert doesn't represent the filename. Will fail.
-        log_error(sprintf(gettext("LDAP Debug: Client LDAPTLS_CERT: %s"), $ldapclientcert));
+		log_error(sprintf(gettext("LDAP Debug: Client LDAPTLS_CERT: %s"), $ldapclientcert));
 		log_error(sprintf(gettext("LDAP Debug: Scope: %s"), $ldapscope));
 		log_error(sprintf(gettext("LDAP Debug: Auth Bind DN: %s"), $ldapbindun));
 		log_error(sprintf(gettext("LDAP Debug: Container: %s"), $ldapauthcont));
