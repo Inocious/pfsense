@@ -1084,8 +1084,9 @@ function ldap_setup_mtls($ldap, $authcfg) {
 	require_once("certs.inc");
 
 	unset($cert_item_config);
+	$ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
 	// Set client certificate options
-	if (!empty($authcfg['ldap_clientcert'])){
+	if ($ldapmtlsenabled) {
 		$cert_item_config = lookup_cert($authcfg['ldap_clientcert']);
 		$thiscert = $cert_item_config['item'];
 		$cert_details = openssl_x509_parse(base64_decode($thiscert['crt']));
