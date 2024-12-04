@@ -1082,7 +1082,6 @@ function ldap_setup_mtls($ldap, $authcfg) {
 	global $g;
 	require_once("certs.inc");
 
-	unset($cert_item_config);
 	$ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
 	// Set client certificate options
 	if ($ldapmtlsenabled) {
@@ -1093,7 +1092,9 @@ function ldap_setup_mtls($ldap, $authcfg) {
 			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 			return;
 		}
-		$cert_item_config = $cert_item_config['crt'];
+		log_error(sprintf(gettext("LDAP: Lookup CERT by reference found for host %s."), $authcfg['ldap_clientcert']));
+		log_error(sprintf(gettext("LDAP: Lookup CERT returned public cert as %s."), $thiscert['crt']));
+		log_error(sprintf(gettext("LDAP: Lookup CERT returned private key as %s."), $thiscert['prv']));
 		$cert_details = openssl_x509_parse(base64_decode($thiscert['crt']));
 		$mtls_cert['descr'] = $thiscert['descr'];
 		$mtls_cert['cert'] = base64_decode($thiscert['crt']);
