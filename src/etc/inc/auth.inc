@@ -1686,12 +1686,12 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        LDAP_DEREF_ALWAYS => 'Always',
 	    ],
 	    LDAP_OPT_PROTOCOL_VERSION => [
-	        LDAP_VERSION2 => 'LDAPv2',
-	        LDAP_VERSION3 => 'LDAPv3',
+	        2 => 'LDAPv2',
+	        3 => 'LDAPv3',
 	    ],
 	    LDAP_OPT_REFERRALS => [
-	        LDAP_REFERRALS_DISABLE => 'Disable',
-	        LDAP_REFERRALS_ENABLE => 'Enable',
+	        0 => 'Disable',
+	        1 => 'Enable',
 	    ],
 	    LDAP_OPT_RESTART => [
 	        0 => 'Disable',
