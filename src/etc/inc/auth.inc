@@ -1071,7 +1071,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 		unlink_if_exists($cert_filename);
 		file_put_contents($cert_filename, $cachain);
 		@chmod($cert_filename, 0600);
-		log_error(sprintf(gettext("LDAP: Lookup CA returned CA as %s."), $caref['crt']))
+		log_error(sprintf(gettext("LDAP: Lookup CA returned CA as %s."), $caref['crt']));
 		log_error(sprintf(gettext("LDAP: Wrote public ca to %s."), $cert_filename));
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
