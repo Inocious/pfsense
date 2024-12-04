@@ -1743,7 +1743,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		$error = true;
 	}
 
-	get_ldap_options($ldap)
+	get_ldap_options($ldap);
 
 	if ($error == true) {
 		@ldap_close($ldap);
