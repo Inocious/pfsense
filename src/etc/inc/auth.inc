@@ -1071,7 +1071,6 @@ function ldap_setup_caenv($ldap, $authcfg) {
 		unlink_if_exists($cert_filename);
 		file_put_contents($cert_filename, $cachain);
 		@chmod($cert_filename, 0600);
-		// log_error(sprintf(gettext("LDAP: Lookup CA returned CA as %s."), base64_decode($caref['crt'])));
 		log_error(sprintf(gettext("LDAP: Wrote public ca to %s."), $cert_filename));
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
@@ -1098,8 +1097,8 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		$mtls_cert['descr'] = $thiscert['descr'];
 		$mtls_cert['cert'] = base64_decode($thiscert['crt']);
 		$mtls_cert['key'] = base64_decode($thiscert['prv']);
-		log_error(sprintf(gettext("LDAP: Lookup CERT returned public cert as %s."), $mtls_cert['cert']));
-		log_error(sprintf(gettext("LDAP: Lookup CERT returned private key as %s."), $mtls_cert['key']));
+		//log_error(sprintf(gettext("LDAP: Lookup CERT returned public cert as %s."), $mtls_cert['cert']));
+		//log_error(sprintf(gettext("LDAP: Lookup CERT returned private key as %s."), $mtls_cert['key']));
 		$cert_path = "{$g['varrun_path']}/certs";
 		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
 		$key_filename = "{$cert_path}/{$cert_details['hash']}_key.0";
@@ -1641,6 +1640,52 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		}
 	} else if (!($res = @ldap_bind($ldap, $ldapbindun, $ldapbindpw))) {
 		$error = true;
+	}
+
+	$options = [
+	    LDAP_OPT_DEREF,
+	    LDAP_OPT_SIZELIMIT,
+	    LDAP_OPT_TIMELIMIT,
+	    LDAP_OPT_NETWORK_TIMEOUT,
+	    LDAP_OPT_PROTOCOL_VERSION,
+	    LDAP_OPT_ERROR_NUMBER,
+	    LDAP_OPT_DIAGNOSTIC_MESSAGE,
+	    LDAP_OPT_REFERRALS,
+	    LDAP_OPT_RESTART,
+	    LDAP_OPT_HOST_NAME,
+	    LDAP_OPT_ERROR_STRING,
+	    LDAP_OPT_MATCHED_DN,
+	    LDAP_OPT_SERVER_CONTROLS,
+	    LDAP_OPT_CLIENT_CONTROLS,
+	    LDAP_OPT_X_KEEPALIVE_IDLE,
+	    LDAP_OPT_X_KEEPALIVE_PROBES,
+	    LDAP_OPT_X_KEEPALIVE_INTERVAL,
+	    LDAP_OPT_X_TLS_CACERTDIR,
+	    LDAP_OPT_X_TLS_CACERTFILE,
+	    LDAP_OPT_X_TLS_CERTFILE,
+	    LDAP_OPT_X_TLS_CIPHER_SUITE,
+	    LDAP_OPT_X_TLS_CRLCHECK,
+	    LDAP_OPT_X_TLS_CRL_NONE,
+	    LDAP_OPT_X_TLS_CRL_PEER,
+	    LDAP_OPT_X_TLS_CRL_ALL,
+	    LDAP_OPT_X_TLS_CRLFILE,
+	    LDAP_OPT_X_TLS_DHFILE,
+	    LDAP_OPT_X_TLS_KEYFILE,
+	    LDAP_OPT_X_TLS_PACKAGE,
+	    LDAP_OPT_X_TLS_PROTOCOL_MIN,
+	    LDAP_OPT_X_TLS_REQUIRE_CERT,
+	    LDAP_OPT_X_TLS_RANDOM_FILE,
+	];
+	
+	// Retrieve and display option values
+	echo "LDAP Options:\n";
+	foreach ($options as $option) {
+	    $value = null;
+	    if (ldap_get_option($ldap, $option, $value)) {
+	        log_error(sprintf(gettext("Option %s: %s\n"), $option, var_export($value, true)));
+	    } else {
+	        echo sprintf("Option %s: Unable to retrieve value\n", $option);
+	    }
 	}
 
 	if ($error == true) {
