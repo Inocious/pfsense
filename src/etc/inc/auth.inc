@@ -1194,7 +1194,7 @@ function ldap_test_bind($authcfg) {
 		@ldap_close($ldap);
 		return false;
 	}
-
+	get_ldap_options($ldap);
 	@ldap_unbind($ldap);
 
 	return true;
@@ -1285,6 +1285,8 @@ function ldap_get_user_ous($show_complete_ou, $authcfg) {
 		@ldap_close($ldap);
 		return $ous;
 	}
+
+	get_ldap_options($ldap);
 
 	if ($ldapscope == "one") {
 		$ldapfunc = "ldap_list";
@@ -1427,6 +1429,8 @@ function ldap_get_groups($username, $authcfg) {
 		@ldap_close($ldap);
 		return $memberof;
 	}
+
+	get_ldap_options($ldap);
 
 	/* get groups from DN found */
 	/* use ldap_read instead of search so we don't have to do a bunch of extra work */
@@ -1847,6 +1851,8 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		@ldap_unbind($ldap);
 		return false;
 	}
+	
+	get_ldap_options($ldap);
 
 	if ($debug) {
 		$userdn = isset($authcfg['ldap_utf8']) ? utf8_decode($userdn) : $userdn;
