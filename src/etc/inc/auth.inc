@@ -1600,7 +1600,7 @@ function simple_test(){
 	$ldapbindpw = 'yGX9gJnjozsyrDytL6gr';
 
 	$ldapOptions = [
-		LDAP_OPT_DEBUG_LEVEL => LDAP_DEBUG_ANY,
+		LDAP_OPT_DEBUG_LEVEL => 65535,
 	    LDAP_OPT_X_TLS_CACERTFILE => $caFile,
 	    LDAP_OPT_X_TLS_CERTFILE => $certFile,
 	    LDAP_OPT_X_TLS_KEYFILE => $keyFile,
