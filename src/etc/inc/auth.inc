@@ -1643,38 +1643,38 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	}
 
 	$options = [
-	    LDAP_OPT_DEREF => 'Deref aliases',
-	    LDAP_OPT_SIZELIMIT => 'Size limit',
-	    LDAP_OPT_TIMELIMIT => 'Time limit',
-	    LDAP_OPT_NETWORK_TIMEOUT => 'Network timeout',
-	    LDAP_OPT_PROTOCOL_VERSION => 'Protocol version',
-	    LDAP_OPT_ERROR_NUMBER => 'Error number',
-	    LDAP_OPT_DIAGNOSTIC_MESSAGE => 'latest session error message',
-	    LDAP_OPT_REFERRALS => 'Referrals',
-	    LDAP_OPT_RESTART => 'Restart',
-	    LDAP_OPT_HOST_NAME => 'Sets/gets a space-separated of hosts when trying to connect',
-	    LDAP_OPT_ERROR_STRING => 'Alias of LDAP_OPT_DIAGNOSTIC_MESSAGE',
-	    LDAP_OPT_MATCHED_DN => 'Sets/gets the matched DN associated with the connection',
-	    LDAP_OPT_SERVER_CONTROLS => 'Default list of server controls to be sent with each request',
-	    LDAP_OPT_CLIENT_CONTROLS => 'Default list of client controls to be processed with each request',
-	    LDAP_OPT_X_KEEPALIVE_IDLE => 'Number of seconds a connection needs to remain idle before TCP starts sending keepalive probes',
-	    LDAP_OPT_X_KEEPALIVE_PROBES => 'Maximum number of keepalive probes TCP should send before dropping the connection',
-	    LDAP_OPT_X_KEEPALIVE_INTERVAL => 'Interval in seconds between individual keepalive probes',
-	    LDAP_OPT_X_TLS_CACERTDIR => 'Path of the directory containing CA certificates',
-	    LDAP_OPT_X_TLS_CACERTFILE => 'TLS CA cert file',
-	    LDAP_OPT_X_TLS_CERTFILE => 'TLS cert file',
-	    LDAP_OPT_X_TLS_CIPHER_SUITE => 'TLS cipher suite',
-	    LDAP_OPT_X_TLS_CRLCHECK => 'TLS CRL check',
-	    LDAP_OPT_X_TLS_CRL_NONE => 'No CRL checks are performed',
-	    LDAP_OPT_X_TLS_CRL_PEER => 'Check the CRL of the peer certificate',
-	    LDAP_OPT_X_TLS_CRL_ALL => 'Check the CRL for a whole certificate chain',
-	    LDAP_OPT_X_TLS_CRLFILE => 'full-path of the CRL file',
-	    LDAP_OPT_X_TLS_DHFILE => 'Full-path of the file containing the parameters for Diffie-Hellman ephemeral key exchange',
-	    LDAP_OPT_X_TLS_KEYFILE => 'TLS key file',
-	    LDAP_OPT_X_TLS_PACKAGE => 'name of the underlying TLS implementation',
-	    LDAP_OPT_X_TLS_PROTOCOL_MIN => 'minimum protocol version',
-	    LDAP_OPT_X_TLS_REQUIRE_CERT => 'TLS require cert',
-	    LDAP_OPT_X_TLS_RANDOM_FILE => 'Sets/gets the random file when one of the system default ones are not available',
+	    LDAP_OPT_DEREF => 'LDAP_OPT_DEREF',
+	    LDAP_OPT_SIZELIMIT => 'LDAP_OPT_SIZELIMIT',
+	    LDAP_OPT_TIMELIMIT => 'LDAP_OPT_TIMELIMIT',
+	    LDAP_OPT_NETWORK_TIMEOUT => 'LDAP_OPT_NETWORK_TIMEOUT',
+	    LDAP_OPT_PROTOCOL_VERSION => 'LDAP_OPT_PROTOCOL_VERSION',
+	    LDAP_OPT_ERROR_NUMBER => 'LDAP_OPT_ERROR_NUMBER',
+	    LDAP_OPT_DIAGNOSTIC_MESSAGE => 'LDAP_OPT_DIAGNOSTIC_MESSAGE',
+	    LDAP_OPT_REFERRALS => 'LDAP_OPT_REFERRALS',
+	    LDAP_OPT_RESTART => 'LDAP_OPT_RESTART',
+	    LDAP_OPT_HOST_NAME => 'LDAP_OPT_HOST_NAME',
+	    LDAP_OPT_ERROR_STRING => 'LDAP_OPT_ERROR_STRING',
+	    LDAP_OPT_MATCHED_DN => 'LDAP_OPT_MATCHED_DN',
+	    LDAP_OPT_SERVER_CONTROLS => 'LDAP_OPT_SERVER_CONTROLS',
+	    LDAP_OPT_CLIENT_CONTROLS => 'LDAP_OPT_CLIENT_CONTROLS',
+	    LDAP_OPT_X_KEEPALIVE_IDLE => 'LDAP_OPT_X_KEEPALIVE_IDLE',
+	    LDAP_OPT_X_KEEPALIVE_PROBES => 'LDAP_OPT_X_KEEPALIVE_PROBES',
+	    LDAP_OPT_X_KEEPALIVE_INTERVAL => 'LDAP_OPT_X_KEEPALIVE_INTERVAL',
+	    LDAP_OPT_X_TLS_CACERTDIR => 'LDAP_OPT_X_TLS_CACERTDIR',
+	    LDAP_OPT_X_TLS_CACERTFILE => 'LDAP_OPT_X_TLS_CACERTFILE',
+	    LDAP_OPT_X_TLS_CERTFILE => 'LDAP_OPT_X_TLS_CERTFILE',
+	    LDAP_OPT_X_TLS_CIPHER_SUITE => 'LDAP_OPT_X_TLS_CIPHER_SUITE',
+	    LDAP_OPT_X_TLS_CRLCHECK => 'LDAP_OPT_X_TLS_CRLCHECK',
+	    LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE',
+	    LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER',
+	    LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL',
+	    LDAP_OPT_X_TLS_CRLFILE => 'LDAP_OPT_X_TLS_CRLFILE',
+	    LDAP_OPT_X_TLS_DHFILE => 'LDAP_OPT_X_TLS_DHFILE',
+	    LDAP_OPT_X_TLS_KEYFILE => 'LDAP_OPT_X_TLS_KEYFILE',
+	    LDAP_OPT_X_TLS_PACKAGE => 'LDAP_OPT_X_TLS_PACKAGE',
+	    LDAP_OPT_X_TLS_PROTOCOL_MIN => 'LDAP_OPT_X_TLS_PROTOCOL_MIN',
+	    LDAP_OPT_X_TLS_REQUIRE_CERT => 'LDAP_OPT_X_TLS_REQUIRE_CERT',
+	    LDAP_OPT_X_TLS_RANDOM_FILE => 'LDAP_OPT_X_TLS_RANDOM_FILE',
 	];
 	
 	// Retrieve and display option values
@@ -1686,7 +1686,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        if (isset($value_mappings[$option]) && isset($value_mappings[$option][$value])) {
 	            $value = $value_mappings[$option][$value];
 	        }
-	        log_error(sprintf(gettext("Option %s (%s): %s\n"), $option, $description, var_export($value, true)));
+	        log_error(sprintf(gettext("Option %s: %s\n"), $description, var_export($value, true)));
 	    } else {
 	        log_error(sprintf(gettext("Option %s (%s): Unable to retrieve value\n"), $option, $description));
 	    }
