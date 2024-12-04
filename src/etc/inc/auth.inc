@@ -1676,7 +1676,18 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	    LDAP_OPT_X_TLS_REQUIRE_CERT => 'LDAP_OPT_X_TLS_REQUIRE_CERT',
 	    LDAP_OPT_X_TLS_RANDOM_FILE => 'LDAP_OPT_X_TLS_RANDOM_FILE',
 	];
-	
+
+	// Mappings for specific option values
+	$value_mappings = [
+	    LDAP_OPT_X_TLS_REQUIRE_CERT => [
+	        LDAP_OPT_X_TLS_NEVER => 'LDAP_OPT_X_TLS_NEVER',
+	        LDAP_OPT_X_TLS_HARD => 'LDAP_OPT_X_TLS_HARD',
+	        LDAP_OPT_X_TLS_DEMAND => 'LDAP_OPT_X_TLS_DEMAND',
+	        LDAP_OPT_X_TLS_ALLOW => 'LDAP_OPT_X_TLS_ALLOW',
+	        LDAP_OPT_X_TLS_TRY => 'LDAP_OPT_X_TLS_TRY',
+	    ],
+	];
+
 	// Retrieve and display option values
 	echo "LDAP Options:\n";
 	foreach ($options as $option => $description) {
@@ -1688,7 +1699,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        }
 	        log_error(sprintf(gettext("Option %s: %s\n"), $description, var_export($value, true)));
 	    } else {
-	        log_error(sprintf(gettext("Option %s (%s): Unable to retrieve value\n"), $option, $description));
+	        log_error(sprintf(gettext("Option %s: Unable to retrieve value\n"), $description));
 	    }
 	}
 
