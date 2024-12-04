@@ -1117,7 +1117,7 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
 		@chmod($cert_filename, 0600);
 		@chmod($key_filename, 0400);
-		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
+		//ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
 	}
@@ -1747,6 +1747,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 
 	if ($error == true) {
 		@ldap_close($ldap);
+		log_error(sprintf(gettext("ERROR! Could not bind to LDAP server %s. Please check the bind credentials."), $ldapname));
 		$attributes['error_message'] = gettext("Error : could not connect to authentication server.");
 		return null;
 	}
