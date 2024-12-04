@@ -1618,7 +1618,7 @@ function simple_test(){
 	}
 
 	if ($error == true) {
-		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
+		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldapResource), ldap_errno($ldapResource)));
 		ldap_get_option($ldapResource, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg);
 		log_error(sprintf(gettext("%s (%d): %s\n"),ldap_error($ldapResource), ldap_errno($ldapResource),$errMsg));
 		@ldap_close($ldap);
