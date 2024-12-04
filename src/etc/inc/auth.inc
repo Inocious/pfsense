@@ -1715,6 +1715,13 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        LDAP_OPT_X_TLS_DEMAND => 'LDAP_OPT_X_TLS_DEMAND (Demand)',
 	        LDAP_OPT_X_TLS_HARD => 'LDAP_OPT_X_TLS_HARD (Hard)',
 	    ],
+	    LDAP_OPT_X_TLS_PROTOCOL_MIN => [
+	        LDAP_OPT_X_TLS_PROTOCOL_SSL2 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL2 (SSLv2)',
+	        LDAP_OPT_X_TLS_PROTOCOL_SSL3 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL3 (SSLv3)',
+	        LDAP_OPT_X_TLS_PROTOCOL_TLS1_0 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_0 (TLSv1.0)',
+	        LDAP_OPT_X_TLS_PROTOCOL_TLS1_1 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_1 (TLSv1.1)',
+	        LDAP_OPT_X_TLS_PROTOCOL_TLS1_2 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_2 (TLSv1.2)'
+	    ],
 	];
 
 	// Retrieve and display option values
