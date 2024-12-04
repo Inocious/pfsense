@@ -1611,6 +1611,7 @@ function simple_test(){
 	    ldap_set_option(null, $k, $v);
 	}
 
+	ldap_set_option($ldapResource, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_DEMAND);
 	$ldapResource = ldap_connect($ldapUri);
 	$error = false;
 	get_ldap_options($ldapResource);
