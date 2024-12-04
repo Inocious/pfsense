@@ -1679,12 +1679,16 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	
 	// Retrieve and display option values
 	echo "LDAP Options:\n";
-	foreach ($options as $option) {
+	foreach ($options as $option => $description) {
 	    $value = null;
 	    if (ldap_get_option($ldap, $option, $value)) {
-	        log_error(sprintf(gettext("Option %s: %s\n"), $option, var_export($value, true)));
+	        // Translate known values
+	        if (isset($value_mappings[$option]) && isset($value_mappings[$option][$value])) {
+	            $value = $value_mappings[$option][$value];
+	        }
+	        echo sprintf("Option %s (%s): %s\n", $option, $description, var_export($value, true));
 	    } else {
-	        echo sprintf("Option %s: Unable to retrieve value\n", $option);
+	        echo sprintf("Option %s (%s): Unable to retrieve value\n", $option, $description);
 	    }
 	}
 
