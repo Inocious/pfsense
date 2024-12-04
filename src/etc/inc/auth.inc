@@ -1077,7 +1077,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 		if ($ldapmtlsenabled) {
 			/*ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
 			ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTFILE, $cert_filename);*/
-			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_ALLOW);
+			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
 			ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
 			ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, $cert_filename);
 		} else {
