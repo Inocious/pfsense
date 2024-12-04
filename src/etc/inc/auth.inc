@@ -1499,6 +1499,101 @@ function ldap_format_host($host) {
 	return is_ipaddrv6($host) ? "[$host]" : $host ;
 }
 
+
+function get_ldap_options($ldap) {
+	$options = [
+	    LDAP_OPT_DEREF => 'LDAP_OPT_DEREF',
+	    LDAP_OPT_SIZELIMIT => 'LDAP_OPT_SIZELIMIT',
+	    LDAP_OPT_TIMELIMIT => 'LDAP_OPT_TIMELIMIT',
+	    LDAP_OPT_NETWORK_TIMEOUT => 'LDAP_OPT_NETWORK_TIMEOUT',
+	    LDAP_OPT_PROTOCOL_VERSION => 'LDAP_OPT_PROTOCOL_VERSION',
+	    LDAP_OPT_ERROR_NUMBER => 'LDAP_OPT_ERROR_NUMBER',
+	    LDAP_OPT_DIAGNOSTIC_MESSAGE => 'LDAP_OPT_DIAGNOSTIC_MESSAGE',
+	    LDAP_OPT_REFERRALS => 'LDAP_OPT_REFERRALS',
+	    LDAP_OPT_RESTART => 'LDAP_OPT_RESTART',
+	    LDAP_OPT_HOST_NAME => 'LDAP_OPT_HOST_NAME',
+	    LDAP_OPT_ERROR_STRING => 'LDAP_OPT_ERROR_STRING',
+	    LDAP_OPT_MATCHED_DN => 'LDAP_OPT_MATCHED_DN',
+	    LDAP_OPT_SERVER_CONTROLS => 'LDAP_OPT_SERVER_CONTROLS',
+	    LDAP_OPT_CLIENT_CONTROLS => 'LDAP_OPT_CLIENT_CONTROLS',
+	    LDAP_OPT_X_KEEPALIVE_IDLE => 'LDAP_OPT_X_KEEPALIVE_IDLE',
+	    LDAP_OPT_X_KEEPALIVE_PROBES => 'LDAP_OPT_X_KEEPALIVE_PROBES',
+	    LDAP_OPT_X_KEEPALIVE_INTERVAL => 'LDAP_OPT_X_KEEPALIVE_INTERVAL',
+	    LDAP_OPT_X_TLS_CACERTDIR => 'LDAP_OPT_X_TLS_CACERTDIR',
+	    LDAP_OPT_X_TLS_CACERTFILE => 'LDAP_OPT_X_TLS_CACERTFILE',
+	    LDAP_OPT_X_TLS_CERTFILE => 'LDAP_OPT_X_TLS_CERTFILE',
+	    LDAP_OPT_X_TLS_CIPHER_SUITE => 'LDAP_OPT_X_TLS_CIPHER_SUITE',
+	    LDAP_OPT_X_TLS_CRLCHECK => 'LDAP_OPT_X_TLS_CRLCHECK',
+	    LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE',
+	    LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER',
+	    LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL',
+	    LDAP_OPT_X_TLS_CRLFILE => 'LDAP_OPT_X_TLS_CRLFILE',
+	    LDAP_OPT_X_TLS_DHFILE => 'LDAP_OPT_X_TLS_DHFILE',
+	    LDAP_OPT_X_TLS_KEYFILE => 'LDAP_OPT_X_TLS_KEYFILE',
+	    LDAP_OPT_X_TLS_PACKAGE => 'LDAP_OPT_X_TLS_PACKAGE',
+	    LDAP_OPT_X_TLS_PROTOCOL_MIN => 'LDAP_OPT_X_TLS_PROTOCOL_MIN',
+	    LDAP_OPT_X_TLS_REQUIRE_CERT => 'LDAP_OPT_X_TLS_REQUIRE_CERT',
+	    LDAP_OPT_X_TLS_RANDOM_FILE => 'LDAP_OPT_X_TLS_RANDOM_FILE',
+	];
+
+	// Mappings for specific option values
+	$value_mappings = [
+	    LDAP_OPT_DEREF => [
+	        LDAP_DEREF_NEVER => 'LDAP_DEREF_NEVER (Never)',
+	        LDAP_DEREF_SEARCHING => 'LDAP_DEREF_SEARCHING (Searching)',
+	        LDAP_DEREF_FINDING => 'LDAP_DEREF_FINDING (Finding)',
+	        LDAP_DEREF_ALWAYS => 'LDAP_DEREF_ALWAYS (Always)',
+	    ],
+	    LDAP_OPT_PROTOCOL_VERSION => [
+	        2 => 'LDAPv2',
+	        3 => 'LDAPv3',
+	    ],
+	    LDAP_OPT_REFERRALS => [
+	        0 => 'Disable',
+	        1 => 'Enable',
+	    ],
+	    LDAP_OPT_RESTART => [
+	        0 => 'Disable',
+	        1 => 'Enable',
+	    ],
+	    LDAP_OPT_X_TLS_CRLCHECK => [
+	        LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE (No CRL Checking)',
+	        LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER (Peer Only)',
+	        LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL (All)',
+	    ],
+	    LDAP_OPT_X_TLS_REQUIRE_CERT => [
+	        LDAP_OPT_X_TLS_NEVER => 'LDAP_OPT_X_TLS_NEVER (Never)',
+	        LDAP_OPT_X_TLS_ALLOW => 'LDAP_OPT_X_TLS_ALLOW (Allow)',
+	        LDAP_OPT_X_TLS_TRY => 'LDAP_OPT_X_TLS_TRY (Try)',
+	        LDAP_OPT_X_TLS_DEMAND => 'LDAP_OPT_X_TLS_DEMAND (Demand)',
+	        LDAP_OPT_X_TLS_HARD => 'LDAP_OPT_X_TLS_HARD (Hard)',
+	    ],
+	    LDAP_OPT_X_TLS_PROTOCOL_MIN => [
+	        0 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL2 (SSLv2)',
+	        1 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL3 (SSLv3)',
+	        2 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_0 (TLSv1.0)',
+	        3 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_1 (TLSv1.1)',
+	        4 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_2 (TLSv1.2)',
+			5 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_3 (TLSv1.3)'
+	    ],
+	];
+
+	// Retrieve and display option values
+	echo "LDAP Options:\n";
+	foreach ($options as $option => $description) {
+	    $value = null;
+	    if (ldap_get_option($ldap, $option, $value)) {
+	        // Translate known values
+	        if (isset($value_mappings[$option]) && isset($value_mappings[$option][$value])) {
+	            $value = $value_mappings[$option][$value];
+	        }
+	        log_error(sprintf(gettext("Option %s: %s"), $description, var_export($value, true)));
+	    } else {
+	        log_error(sprintf(gettext("Option %s: Unable to retrieve value"), $description));
+	    }
+	}
+}
+
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	global $debug;
 
@@ -1648,97 +1743,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		$error = true;
 	}
 
-	$options = [
-	    LDAP_OPT_DEREF => 'LDAP_OPT_DEREF',
-	    LDAP_OPT_SIZELIMIT => 'LDAP_OPT_SIZELIMIT',
-	    LDAP_OPT_TIMELIMIT => 'LDAP_OPT_TIMELIMIT',
-	    LDAP_OPT_NETWORK_TIMEOUT => 'LDAP_OPT_NETWORK_TIMEOUT',
-	    LDAP_OPT_PROTOCOL_VERSION => 'LDAP_OPT_PROTOCOL_VERSION',
-	    LDAP_OPT_ERROR_NUMBER => 'LDAP_OPT_ERROR_NUMBER',
-	    LDAP_OPT_DIAGNOSTIC_MESSAGE => 'LDAP_OPT_DIAGNOSTIC_MESSAGE',
-	    LDAP_OPT_REFERRALS => 'LDAP_OPT_REFERRALS',
-	    LDAP_OPT_RESTART => 'LDAP_OPT_RESTART',
-	    LDAP_OPT_HOST_NAME => 'LDAP_OPT_HOST_NAME',
-	    LDAP_OPT_ERROR_STRING => 'LDAP_OPT_ERROR_STRING',
-	    LDAP_OPT_MATCHED_DN => 'LDAP_OPT_MATCHED_DN',
-	    LDAP_OPT_SERVER_CONTROLS => 'LDAP_OPT_SERVER_CONTROLS',
-	    LDAP_OPT_CLIENT_CONTROLS => 'LDAP_OPT_CLIENT_CONTROLS',
-	    LDAP_OPT_X_KEEPALIVE_IDLE => 'LDAP_OPT_X_KEEPALIVE_IDLE',
-	    LDAP_OPT_X_KEEPALIVE_PROBES => 'LDAP_OPT_X_KEEPALIVE_PROBES',
-	    LDAP_OPT_X_KEEPALIVE_INTERVAL => 'LDAP_OPT_X_KEEPALIVE_INTERVAL',
-	    LDAP_OPT_X_TLS_CACERTDIR => 'LDAP_OPT_X_TLS_CACERTDIR',
-	    LDAP_OPT_X_TLS_CACERTFILE => 'LDAP_OPT_X_TLS_CACERTFILE',
-	    LDAP_OPT_X_TLS_CERTFILE => 'LDAP_OPT_X_TLS_CERTFILE',
-	    LDAP_OPT_X_TLS_CIPHER_SUITE => 'LDAP_OPT_X_TLS_CIPHER_SUITE',
-	    LDAP_OPT_X_TLS_CRLCHECK => 'LDAP_OPT_X_TLS_CRLCHECK',
-	    LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE',
-	    LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER',
-	    LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL',
-	    LDAP_OPT_X_TLS_CRLFILE => 'LDAP_OPT_X_TLS_CRLFILE',
-	    LDAP_OPT_X_TLS_DHFILE => 'LDAP_OPT_X_TLS_DHFILE',
-	    LDAP_OPT_X_TLS_KEYFILE => 'LDAP_OPT_X_TLS_KEYFILE',
-	    LDAP_OPT_X_TLS_PACKAGE => 'LDAP_OPT_X_TLS_PACKAGE',
-	    LDAP_OPT_X_TLS_PROTOCOL_MIN => 'LDAP_OPT_X_TLS_PROTOCOL_MIN',
-	    LDAP_OPT_X_TLS_REQUIRE_CERT => 'LDAP_OPT_X_TLS_REQUIRE_CERT',
-	    LDAP_OPT_X_TLS_RANDOM_FILE => 'LDAP_OPT_X_TLS_RANDOM_FILE',
-	];
-
-	// Mappings for specific option values
-	$value_mappings = [
-	    LDAP_OPT_DEREF => [
-	        LDAP_DEREF_NEVER => 'LDAP_DEREF_NEVER (Never)',
-	        LDAP_DEREF_SEARCHING => 'LDAP_DEREF_SEARCHING (Searching)',
-	        LDAP_DEREF_FINDING => 'LDAP_DEREF_FINDING (Finding)',
-	        LDAP_DEREF_ALWAYS => 'LDAP_DEREF_ALWAYS (Always)',
-	    ],
-	    LDAP_OPT_PROTOCOL_VERSION => [
-	        2 => 'LDAPv2',
-	        3 => 'LDAPv3',
-	    ],
-	    LDAP_OPT_REFERRALS => [
-	        0 => 'Disable',
-	        1 => 'Enable',
-	    ],
-	    LDAP_OPT_RESTART => [
-	        0 => 'Disable',
-	        1 => 'Enable',
-	    ],
-	    LDAP_OPT_X_TLS_CRLCHECK => [
-	        LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE (No CRL Checking)',
-	        LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER (Peer Only)',
-	        LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL (All)',
-	    ],
-	    LDAP_OPT_X_TLS_REQUIRE_CERT => [
-	        LDAP_OPT_X_TLS_NEVER => 'LDAP_OPT_X_TLS_NEVER (Never)',
-	        LDAP_OPT_X_TLS_ALLOW => 'LDAP_OPT_X_TLS_ALLOW (Allow)',
-	        LDAP_OPT_X_TLS_TRY => 'LDAP_OPT_X_TLS_TRY (Try)',
-	        LDAP_OPT_X_TLS_DEMAND => 'LDAP_OPT_X_TLS_DEMAND (Demand)',
-	        LDAP_OPT_X_TLS_HARD => 'LDAP_OPT_X_TLS_HARD (Hard)',
-	    ],
-	    LDAP_OPT_X_TLS_PROTOCOL_MIN => [
-	        0 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL2 (SSLv2)',
-	        1 => 'LDAP_OPT_X_TLS_PROTOCOL_SSL3 (SSLv3)',
-	        2 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_0 (TLSv1.0)',
-	        3 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_1 (TLSv1.1)',
-	        4 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_2 (TLSv1.2)',
-			5 => 'LDAP_OPT_X_TLS_PROTOCOL_TLS1_3 (TLSv1.3)'
-	    ],
-	];
-
-	// Retrieve and display option values
-	echo "LDAP Options:\n";
-	foreach ($options as $option => $description) {
-	    $value = null;
-	    if (ldap_get_option($ldap, $option, $value)) {
-	        // Translate known values
-	        if (isset($value_mappings[$option]) && isset($value_mappings[$option][$value])) {
-	            $value = $value_mappings[$option][$value];
-	        }
-	        log_error(sprintf(gettext("Option %s: %s"), $description, var_export($value, true)));
-	    } else {
-	        log_error(sprintf(gettext("Option %s: Unable to retrieve value"), $description));
-	    }
-	}
+	get_ldap_options($ldap)
 
 	if ($error == true) {
 		@ldap_close($ldap);
