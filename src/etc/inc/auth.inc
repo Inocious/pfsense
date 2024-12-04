@@ -1596,8 +1596,8 @@ function simple_test(){
 	$caFile = '/var/run/certs/f03dd1db.crt';
 	$certFile = '/var/run/certs/229c13f4.crt';
 	$keyFile = '/var/run/certs/229c13f4.key';
-	ldapbindun= 'uid=ldap_srv,ou=users,dc=graysky,dc=local';
-	ldapbindpw= 'yGX9gJnjozsyrDytL6gr';
+	$ldapbindun = 'uid=ldap_srv,ou=users,dc=graysky,dc=local';
+	$ldapbindpw = 'yGX9gJnjozsyrDytL6gr';
 
 	$ldapOptions = [
 	    LDAP_OPT_X_TLS_CACERTFILE => $caFile,
@@ -1624,6 +1624,7 @@ function simple_test(){
 		@ldap_close($ldap);
 	}
 }
+
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	simple_test()
 	return null;
