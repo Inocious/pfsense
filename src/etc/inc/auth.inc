@@ -1545,16 +1545,16 @@ function get_ldap_options($ldap) {
 	        LDAP_DEREF_ALWAYS => 'LDAP_DEREF_ALWAYS (Always)',
 	    ],
 	    LDAP_OPT_PROTOCOL_VERSION => [
-	        2 => 'LDAPv2',
-	        3 => 'LDAPv3',
+	        2 => '2 (LDAPv2)',
+	        3 => '3 (LDAPv3)',
 	    ],
 	    LDAP_OPT_REFERRALS => [
-	        0 => 'Disable',
-	        1 => 'Enable',
+	        0 => '0 (Disable)',
+	        1 => '1 (Enable)',
 	    ],
 	    LDAP_OPT_RESTART => [
-	        0 => 'Disable',
-	        1 => 'Enable',
+	        0 => '0 (Disable)',
+	        1 => '1 (Enable)',
 	    ],
 	    LDAP_OPT_X_TLS_CRLCHECK => [
 	        LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE (No CRL Checking)',
@@ -1747,7 +1747,8 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 
 	if ($error == true) {
 		@ldap_close($ldap);
-		log_error(sprintf(gettext("ERROR! Could not bind to LDAP server %s. Please check the bind credentials."), $ldapname));
+		ldap_get_option($ldapResource, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg)
+		log_error(sprintf(gettext("ERROR! LDAP_OPT_DIAGNOSTIC_MESSAGE: %s "), $errMsg));
 		$attributes['error_message'] = gettext("Error : could not connect to authentication server.");
 		return null;
 	}
