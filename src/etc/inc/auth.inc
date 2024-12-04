@@ -1605,6 +1605,7 @@ function simple_test(){
 	    LDAP_OPT_X_TLS_KEYFILE => $keyFile,
 	    LDAP_OPT_PROTOCOL_VERSION => 3,
 	    LDAP_OPT_REFERRALS => 0,
+		LDAP_OPT_X_TLS_CACERTDIR => '/var/run/certs/',
 	];
 
 	foreach($ldapOptions as $k => $v) {
