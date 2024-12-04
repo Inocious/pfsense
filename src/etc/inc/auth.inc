@@ -1065,7 +1065,6 @@ function ldap_setup_caenv($ldap, $authcfg) {
 			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 			return;
 		}
-		log_error(sprintf(gettext("LDAP: Got lookup CA by reference for host %s."), $authcfg['ldap_caref']));
 		$cert_path = "{$g['varrun_path']}/certs";
 		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
 		safe_mkdir($cert_path);
@@ -1087,15 +1086,15 @@ function ldap_setup_mtls($ldap, $authcfg) {
 	$ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
 	// Set client certificate options
 	if ($ldapmtlsenabled) {
-		$cert_item_config = lookup_cert($authcfg['ldap_clientcert']);
-		$thiscert = $cert_item_config['item'];
-		$cert_details = openssl_x509_parse(base64_decode($thiscert['crt']));
-		if (!$thiscert) {
+		$thiscert = lookup_cert($authcfg['ldap_clientcert']);
+		if (!(is_array($thiscert) && !empty($thiscert['crt']))) {
 			log_error(sprintf(gettext("LDAP: Could not lookup CERT by reference for host %s."), $authcfg['ldap_clientcert']));
 			/* XXX: Prevent for credential leaking since we cannot setup the CA env. Better way? */
 			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 			return;
 		}
+		$cert_item_config = $cert_item_config['crt'];
+		$cert_details = openssl_x509_parse(base64_decode($thiscert['crt']));
 		$mtls_cert['descr'] = $thiscert['descr'];
 		$mtls_cert['cert'] = base64_decode($thiscert['crt']);
 		$mtls_cert['key'] = base64_decode($thiscert['prv']);
