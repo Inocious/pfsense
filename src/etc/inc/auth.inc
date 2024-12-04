@@ -1590,7 +1590,7 @@ function get_ldap_options($ldap) {
 	}
 }
 
-function simple_test(){
+/*function simple_test(){
 	$ldapUri = 'ldaps://ldap.admin.local:636';
 	$caFile = '/var/run/certs/f03dd1db.crt';
 	$certFile = '/var/run/certs/229c13f4.crt';
@@ -1625,10 +1625,11 @@ function simple_test(){
 		log_error(sprintf(gettext("%s (%d): %s\n"),ldap_error($ldapResource), ldap_errno($ldapResource),$errMsg));
 		@ldap_close($ldapResource);
 	}
-}
+}*/
 
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
-	simple_test();
+	require_once('test.inc');
+	simple_test()
 	return null;
 
 	global $debug;
