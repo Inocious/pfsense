@@ -1748,9 +1748,9 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	get_ldap_options($ldap);
 
 	if ($error == true) {
+		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
 		@ldap_close($ldap);
 		log_error(sprintf(gettext("ERROR! Could not bind to LDAP server %s. Please check the bind credentials."), $ldapname));
-		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
 		$attributes['error_message'] = gettext("Error : could not connect to authentication server.");
 		return null;
 	}
