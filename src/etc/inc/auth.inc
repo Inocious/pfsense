@@ -1066,7 +1066,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 			return;
 		}
 		$cert_path = "{$g['varrun_path']}/certs";
-		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
+		$cert_filename = "{$cert_path}/{$cert_details['hash']}.crt";
 		safe_mkdir($cert_path);
 		unlink_if_exists($cert_filename);
 		file_put_contents($cert_filename, $cachain);
@@ -1106,8 +1106,8 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		//log_error(sprintf(gettext("LDAP: Lookup CERT returned public cert as %s."), $mtls_cert['cert']));
 		//log_error(sprintf(gettext("LDAP: Lookup CERT returned private key as %s."), $mtls_cert['key']));
 		$cert_path = "{$g['varrun_path']}/certs";
-		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
-		$key_filename = "{$cert_path}/{$cert_details['hash']}_key.0";
+		$cert_filename = "{$cert_path}/{$cert_details['hash']}.crt";
+		$key_filename = "{$cert_path}/{$cert_details['hash']}.key";
 		safe_mkdir($cert_path);
 		unlink_if_exists($cert_filename);
 		unlink_if_exists($key_filename);
@@ -1194,7 +1194,7 @@ function ldap_test_bind($authcfg) {
 		@ldap_close($ldap);
 		return false;
 	}
-	get_ldap_options($ldap);
+
 	@ldap_unbind($ldap);
 
 	return true;
@@ -1285,8 +1285,6 @@ function ldap_get_user_ous($show_complete_ou, $authcfg) {
 		@ldap_close($ldap);
 		return $ous;
 	}
-
-	get_ldap_options($ldap);
 
 	if ($ldapscope == "one") {
 		$ldapfunc = "ldap_list";
@@ -1429,8 +1427,6 @@ function ldap_get_groups($username, $authcfg) {
 		@ldap_close($ldap);
 		return $memberof;
 	}
-
-	get_ldap_options($ldap);
 
 	/* get groups from DN found */
 	/* use ldap_read instead of search so we don't have to do a bunch of extra work */
@@ -1851,8 +1847,6 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		@ldap_unbind($ldap);
 		return false;
 	}
-	
-	get_ldap_options($ldap);
 
 	if ($debug) {
 		$userdn = isset($authcfg['ldap_utf8']) ? utf8_decode($userdn) : $userdn;
