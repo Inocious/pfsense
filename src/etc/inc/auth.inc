@@ -1704,8 +1704,9 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
-	
-	log_error(sprintf(gettext("LDAP connect failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
+
+	@ldap_close($ldap);
+	return null;
 
 	if ($debug) {
 		log_error(sprintf(gettext("LDAP Debug: LDAP connection error flag: %s"), var_export($error, true)));
