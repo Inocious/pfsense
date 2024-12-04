@@ -1591,7 +1591,43 @@ function get_ldap_options($ldap) {
 	}
 }
 
+function simple_test(){
+	$ldapUri = 'ldaps://ldap.admin.local:636';
+	$caFile = '/var/run/certs/f03dd1db.crt';
+	$certFile = '/var/run/certs/229c13f4.crt';
+	$keyFile = '/var/run/certs/229c13f4.key';
+	ldapbindun= 'uid=ldap_srv,ou=users,dc=graysky,dc=local';
+	ldapbindpw= 'yGX9gJnjozsyrDytL6gr';
+
+	$ldapOptions = [
+	    LDAP_OPT_X_TLS_CACERTFILE => $caFile,
+	    LDAP_OPT_X_TLS_CERTFILE => $certFile,
+	    LDAP_OPT_X_TLS_KEYFILE => $keyFile,
+	    LDAP_OPT_PROTOCOL_VERSION => 3,
+	    LDAP_OPT_REFERRALS => 0,
+	];
+
+	foreach($ldapOptions as $k => $v) {
+	    ldap_set_option(null, $k, $v);
+	}
+
+	$ldapResource = ldap_connect($ldapUri);
+	$error = false;
+	if (!($res = @ldap_bind($ldapResource, $ldapbindun, $ldapbindpw))) {
+		$error = true;
+	}
+
+	if ($error == true) {
+		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
+		ldap_get_option($ldapResource, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg)
+		log_error(sprintf(gettext("%s (%d): %s\n"),ldap_error($ldapResource), ldap_errno($ldapResource),$errMsg));
+		@ldap_close($ldap);
+	}
+}
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
+	simple_test()
+	return null;
+
 	global $debug;
 
 	if (!$username) {
