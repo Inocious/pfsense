@@ -1746,9 +1746,9 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	get_ldap_options($ldap);
 
 	if ($error == true) {
-		@ldap_close($ldap);
 		ldap_get_option($ldap, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg);
 		log_error(sprintf(gettext("ERROR! LDAP_OPT_DIAGNOSTIC_MESSAGE: %s "), $errMsg));
+		@ldap_close($ldap);
 		$attributes['error_message'] = gettext("Error : could not connect to authentication server.");
 		return null;
 	}
