@@ -1737,9 +1737,7 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	ldap_set_option($ldap, LDAP_OPT_X_TLS_CERTFILE, "/var/run/certs/229c13f4.crt");
 	ldap_set_option($ldap, LDAP_OPT_X_TLS_KEYFILE, "/var/run/certs/229c13f4.key");
 	ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
-	ldap_set_option($ldap, LDAP_OPT_DEBUG_LEVEL, 255);
-	ini_set('log_errors', 1);
-	ini_set('error_log', '/tmp/php_errors.log');
+	ldap_set_option($ldap, LDAP_OPT_DEBUG_LEVEL, 7);
 	if ($ldapanon == true) {
 		if (!($res = @ldap_bind($ldap))) {
 			$error = true;
