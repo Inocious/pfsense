@@ -1499,7 +1499,6 @@ function ldap_format_host($host) {
 	return is_ipaddrv6($host) ? "[$host]" : $host ;
 }
 
-
 function get_ldap_options($ldap) {
 	$options = [
 	    LDAP_OPT_DEREF => 'LDAP_OPT_DEREF',
@@ -1614,7 +1613,8 @@ function simple_test(){
 
 	$ldapResource = ldap_connect($ldapUri);
 	$error = false;
-	if (!($res = ldap_bind($ldapResource))) {
+	get_ldap_options($ldapResource);
+	if (!($res = ldap_bind($ldapResource, $ldapbindun, $ldapbindpw))) {
 		$error = true;
 	}
 
