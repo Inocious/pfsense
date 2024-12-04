@@ -1697,9 +1697,9 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        if (isset($value_mappings[$option]) && isset($value_mappings[$option][$value])) {
 	            $value = $value_mappings[$option][$value];
 	        }
-	        log_error(sprintf(gettext("Option %s: %s\n"), $description, var_export($value, true)));
+	        log_error(sprintf(gettext("Option %s: %s"), $description, var_export($value, true)));
 	    } else {
-	        log_error(sprintf(gettext("Option %s: Unable to retrieve value\n"), $description));
+	        log_error(sprintf(gettext("Option %s: Unable to retrieve value"), $description));
 	    }
 	}
 
