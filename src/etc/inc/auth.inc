@@ -1686,10 +1686,10 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	// Mappings for specific option values
 	$value_mappings = [
 	    LDAP_OPT_DEREF => [
-	        LDAP_DEREF_NEVER => 'Never',
-	        LDAP_DEREF_SEARCHING => 'Searching',
-	        LDAP_DEREF_FINDING => 'Finding',
-	        LDAP_DEREF_ALWAYS => 'Always',
+	        LDAP_DEREF_NEVER => 'LDAP_DEREF_NEVER (Never)',
+	        LDAP_DEREF_SEARCHING => 'LDAP_DEREF_SEARCHING (Searching)',
+	        LDAP_DEREF_FINDING => 'LDAP_DEREF_FINDING (Finding)',
+	        LDAP_DEREF_ALWAYS => 'LDAP_DEREF_ALWAYS (Always)',
 	    ],
 	    LDAP_OPT_PROTOCOL_VERSION => [
 	        2 => 'LDAPv2',
@@ -1704,16 +1704,16 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	        1 => 'Enable',
 	    ],
 	    LDAP_OPT_X_TLS_CRLCHECK => [
-	        LDAP_OPT_X_TLS_CRL_NONE => 'No CRL Checking',
-	        LDAP_OPT_X_TLS_CRL_PEER => 'Peer Only',
-	        LDAP_OPT_X_TLS_CRL_ALL => 'All',
+	        LDAP_OPT_X_TLS_CRL_NONE => 'LDAP_OPT_X_TLS_CRL_NONE (No CRL Checking)',
+	        LDAP_OPT_X_TLS_CRL_PEER => 'LDAP_OPT_X_TLS_CRL_PEER (Peer Only)',
+	        LDAP_OPT_X_TLS_CRL_ALL => 'LDAP_OPT_X_TLS_CRL_ALL (All)',
 	    ],
 	    LDAP_OPT_X_TLS_REQUIRE_CERT => [
-	        LDAP_OPT_X_TLS_NEVER => 'Never',
-	        LDAP_OPT_X_TLS_ALLOW => 'Allow',
-	        LDAP_OPT_X_TLS_TRY => 'Try',
-	        LDAP_OPT_X_TLS_DEMAND => 'Demand',
-	        LDAP_OPT_X_TLS_HARD => 'Hard',
+	        LDAP_OPT_X_TLS_NEVER => 'LDAP_OPT_X_TLS_NEVER (Never)',
+	        LDAP_OPT_X_TLS_ALLOW => 'LDAP_OPT_X_TLS_ALLOW (Allow)',
+	        LDAP_OPT_X_TLS_TRY => 'LDAP_OPT_X_TLS_TRY (Try)',
+	        LDAP_OPT_X_TLS_DEMAND => 'LDAP_OPT_X_TLS_DEMAND (Demand)',
+	        LDAP_OPT_X_TLS_HARD => 'LDAP_OPT_X_TLS_HARD (Hard)',
 	    ],
 	];
 
