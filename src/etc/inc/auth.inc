@@ -1696,6 +1696,9 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	/* Make sure we can connect to LDAP */
 	$error = false;
 	ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
+	ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, "/var/run/certs/");
+	ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, "/var/run/certs/f03dd1db.crt");
+	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
 	/*if ($ldapextendedqueryenabled) {
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 	}*/
@@ -1736,11 +1739,8 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	$error = false;
 	$ldapbindun = isset($authcfg['ldap_utf8']) ? utf8_encode($ldapbindun) : $ldapbindun;
 	$ldapbindpw = isset($authcfg['ldap_utf8']) ? utf8_encode($ldapbindpw) : $ldapbindpw;
-	ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTDIR, "/var/run/certs/");
-	ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTFILE, "/var/run/certs/f03dd1db.crt");
 	ldap_set_option($ldap, LDAP_OPT_X_TLS_CERTFILE, "/var/run/certs/229c13f4.crt");
 	ldap_set_option($ldap, LDAP_OPT_X_TLS_KEYFILE, "/var/run/certs/229c13f4.key");
-	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
 	if ($ldapanon == true) {
 		if (!($res = @ldap_bind($ldap))) {
 			$error = true;
