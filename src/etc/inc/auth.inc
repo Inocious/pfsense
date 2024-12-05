@@ -1628,8 +1628,8 @@ function get_ldap_options($ldap) {
 }*/
 
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
-	require_once('test.inc');
-	simple_test();
+	//require_once('test.inc');
+	//simple_test();
 	return null;
 
 	global $debug;
