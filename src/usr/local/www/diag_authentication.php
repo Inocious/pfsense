@@ -28,9 +28,9 @@
 ##|*MATCH=diag_authentication.php*
 ##|-PRIV
 
+require_once("test.inc");
 require_once("guiconfig.inc");
 require_once("auth.inc");
-require_once("test.inc");
 
 if ($_POST) {
 	$pconfig = $_POST;

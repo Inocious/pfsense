@@ -1066,7 +1066,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 			return;
 		}
 		$cert_path = "{$g['varrun_path']}/certs";
-		$cert_filename = "{$cert_path}/{$cert_details['hash']}.crt";
+		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
 		safe_mkdir($cert_path);
 		unlink_if_exists($cert_filename);
 		file_put_contents($cert_filename, $cachain);
