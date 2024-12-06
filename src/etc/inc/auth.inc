@@ -1586,7 +1586,6 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 		log_error(sprintf(gettext("LDAP Debug: Attempting to authenticate %s on %s"), $username, $ldapname));
 		log_error(sprintf(gettext("LDAP Debug: URI: %s (v%s)"), $ldapserver, $ldapver));
 		log_error(sprintf(gettext("LDAP Debug: Base DN: %s"), $ldapbasedn));
-		//TODO ldapclientcert doesn't represent the filename. Will fail.
 		if ($ldapmtlsenabled) {
 			log_error(sprintf(gettext("LDAP Debug: Client LDAPTLS_CERT: %s"), $ldapclientcert));
 		}
@@ -1647,7 +1646,6 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 	}
 
 	if ($error == true) {
-		log_error(sprintf(gettext("LDAP bind failed: %s (%s)"),ldap_error($ldap), ldap_errno($ldap)));
 		@ldap_close($ldap);
 		log_error(sprintf(gettext("ERROR! Could not bind to LDAP server %s. Please check the bind credentials."), $ldapname));
 		$attributes['error_message'] = gettext("Error : could not connect to authentication server.");
