@@ -1590,41 +1590,81 @@ function get_ldap_options($ldap) {
 	}
 }
 
-function simple_test(){
-	$ldapUri = 'ldaps://ldap.admin.local:636';
-	$caFile = '/var/run/certs/f03dd1db.crt';
-	$certFile = '/var/run/certs/229c13f4.crt';
-	$keyFile = '/var/run/certs/229c13f4.key';
-	$ldapbindun = 'uid=ldap_srv,ou=users,dc=graysky,dc=local';
-	$ldapbindpw = 'yGX9gJnjozsyrDytL6gr';
+$logFile = "/var/log/ldap_test.log";
+$logHandle = fopen($logFile, "a");
 
-	$ldapOptions = [
-		LDAP_OPT_DEBUG_LEVEL => 65535,
-	    LDAP_OPT_X_TLS_CACERTFILE => $caFile,
-	    LDAP_OPT_X_TLS_CERTFILE => $certFile,
-	    LDAP_OPT_X_TLS_KEYFILE => $keyFile,
-	    LDAP_OPT_PROTOCOL_VERSION => 3,
-	    LDAP_OPT_REFERRALS => 0,
-		LDAP_OPT_X_TLS_CACERTDIR => '/var/run/certs/',
-	];
+// Custom function to log echo statements
+function log_output($message) {
+    global $logHandle;
+    fwrite($logHandle, date("[Y-m-d H:i:s] ") . $message . PHP_EOL);
+}
 
-	foreach($ldapOptions as $k => $v) {
-	    ldap_set_option(null, $k, $v);
-	}
+function log_file_content($filePath, $description) {
+    if (!file_exists($filePath)) {
+        log_output("$description: File does not exist ($filePath)");
+        return;
+    }
 
-	ldap_set_option($ldapResource, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_DEMAND);
-	$ldapResource = ldap_connect($ldapUri);
-	$error = false;
-	get_ldap_options($ldapResource);
-	if (!($res = ldap_bind($ldapResource, $ldapbindun, $ldapbindpw))) {
-		$error = true;
-	}
+    $content = file_get_contents($filePath);
+    if ($content === false) {
+        log_output("$description: Unable to read file ($filePath)");
+        return;
+    }
 
-	if ($error == true) {
-		ldap_get_option($ldapResource, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg);
-		log_error(sprintf(gettext("%s (%d): %s\n"),ldap_error($ldapResource), ldap_errno($ldapResource),$errMsg));
-		@ldap_close($ldapResource);
-	}
+    log_output("$description ($filePath):\n$content");
+}
+
+function simple_test() {
+	log_output("Current user: ". exec('whoami'));
+	phpinfo();
+    $ldapUri = 'ldaps://ldap.admin.local:636';
+    $caFile = '/var/run/certs/f03dd1db.0';
+    $certFile = '/var/run/certs/229c13f4.crt';
+    $keyFile = '/var/run/certs/229c13f4.key';
+    $ldapbindun = 'uid=ldap_srv,ou=users,dc=graysky,dc=local';
+    $ldapbindpw = 'yGX9gJnjozsyrDytL6gr';
+
+    // Log file contents
+    log_file_content($caFile, "CA File");
+    log_file_content($certFile, "Certificate File");
+    log_file_content($keyFile, "Key File");
+
+    $ldapOptions = [
+        LDAP_OPT_DEBUG_LEVEL => 65535,
+        LDAP_OPT_X_TLS_CACERTFILE => $caFile,
+        LDAP_OPT_X_TLS_CERTFILE => $certFile,
+        LDAP_OPT_X_TLS_KEYFILE => $keyFile,
+        LDAP_OPT_PROTOCOL_VERSION => 3,
+        LDAP_OPT_REFERRALS => 0,
+    ];
+
+    foreach ($ldapOptions as $k => $v) {
+        ldap_set_option(null, $k, $v);
+    }
+
+    log_output("Attempting to connect to LDAP server at $ldapUri");
+    $ldapResource = ldap_connect($ldapUri);
+    if (!$ldapResource) {
+        log_output("Failed to connect to LDAP server.");
+        return;
+    }
+    log_output("Connection to LDAP server successful.");
+
+    $error = false;
+    if (!ldap_bind($ldapResource, $ldapbindun, $ldapbindpw)) {
+        $error = true;
+        log_output("LDAP bind failed.");
+    } else {
+        log_output("LDAP bind successful.");
+    }
+
+    if ($error) {
+        ldap_get_option($ldapResource, LDAP_OPT_DIAGNOSTIC_MESSAGE, $errMsg);
+        log_output("Error: " . ldap_error($ldapResource) . " (" . ldap_errno($ldapResource) . "): $errMsg");
+        @ldap_close($ldapResource);
+    } else {
+        log_output("LDAP operations completed successfully.");
+    }
 }
 
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
