@@ -1065,6 +1065,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 			return;
 		}
+
 		$cert_path = "{$g['varrun_path']}/certs";
 		$cert_filename = "{$cert_path}/{$cert_details['hash']}.0";
 		safe_mkdir($cert_path);
