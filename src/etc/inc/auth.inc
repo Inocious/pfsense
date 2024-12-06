@@ -1111,8 +1111,8 @@ function ldap_setup_mtls($authcfg) {
 		file_put_contents($key_filename, $mtls_cert['key']);
 		log_error(sprintf(gettext("LDAP: Wrote public cert to %s."), $cert_filename));
 		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
-		@chmod($cert_filename, 0666);
-		@chmod($key_filename, 0666);
+		@chmod($cert_filename, 0600);
+		@chmod($key_filename, 0400);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
