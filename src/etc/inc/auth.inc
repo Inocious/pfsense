@@ -1073,14 +1073,8 @@ function ldap_setup_caenv($ldap, $authcfg) {
 		@chmod($cert_filename, 0666);
 		log_error(sprintf(gettext("LDAP: Wrote public ca to %s."), $cert_filename));
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
-		$ldapmtlsenabled = $authcfg['ldap_mtls_enabled'];
-		if ($ldapmtlsenabled) {
-			ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
-			ldap_set_option($ldap, LDAP_OPT_X_TLS_CACERTFILE, $cert_filename);
-		} else {
-			ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
-			ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, $cert_filename);
-		}
+		ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
+		ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, $cert_filename);
 	}
 }
 
@@ -1117,7 +1111,7 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
 		@chmod($cert_filename, 0666);
 		@chmod($key_filename, 0666);
-		//ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
+		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
 	}
