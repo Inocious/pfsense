@@ -1026,6 +1026,7 @@ function ldap_test_connection($authcfg) {
 
 	/* connect and see if server is up */
 	$error = false;
+	ldap_setup_mtls($authcfg);
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
@@ -1037,7 +1038,6 @@ function ldap_test_connection($authcfg) {
 
 	/* Setup CA environment if needed. */
 	ldap_setup_caenv($ldap, $authcfg);
-	ldap_setup_mtls($ldap, $authcfg);
 
 	return true;
 }
@@ -1078,7 +1078,7 @@ function ldap_setup_caenv($ldap, $authcfg) {
 	}
 }
 
-function ldap_setup_mtls($ldap, $authcfg) {
+function ldap_setup_mtls($authcfg) {
 	global $g;
 	require_once("certs.inc");
 
@@ -1089,7 +1089,7 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		if (!(is_array($thiscert) && !empty($thiscert['crt']))) {
 			log_error(sprintf(gettext("LDAP: Could not lookup CERT by reference for host %s."), $authcfg['ldap_clientcert']));
 			/* XXX: Prevent for credential leaking since we cannot setup the CA env. Better way? */
-			ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
+			ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 			return;
 		}
 		log_error(sprintf(gettext("LDAP: Lookup CERT by reference found for host %s."), $authcfg['ldap_clientcert']));
@@ -1111,9 +1111,9 @@ function ldap_setup_mtls($ldap, $authcfg) {
 		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
 		@chmod($cert_filename, 0666);
 		@chmod($key_filename, 0666);
-		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
-		ldap_set_option($ldap, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
-		ldap_set_option($ldap, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
+		ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
+		ldap_set_option(NULL, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
+		ldap_set_option(NULL, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
 	}
 }
 
@@ -1150,6 +1150,7 @@ function ldap_test_bind($authcfg) {
 
 	/* connect and see if server is up */
 	$error = false;
+	ldap_setup_mtls($authcfg);
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
@@ -1161,7 +1162,6 @@ function ldap_test_bind($authcfg) {
 
 	/* Setup CA environment if needed. */
 	ldap_setup_caenv($ldap, $authcfg);
-	ldap_setup_mtls($ldap, $authcfg);
 
 	ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 	ldap_set_option($ldap, LDAP_OPT_DEREF, LDAP_DEREF_SEARCHING);
@@ -1237,6 +1237,7 @@ function ldap_get_user_ous($show_complete_ou, $authcfg) {
 
 	/* connect and see if server is up */
 	$error = false;
+	ldap_setup_mtls($authcfg);
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
@@ -1248,7 +1249,6 @@ function ldap_get_user_ous($show_complete_ou, $authcfg) {
 
 	/* Setup CA environment if needed. */
 	ldap_setup_caenv($ldap, $authcfg);
-	ldap_setup_mtls($ldap, $authcfg);
 
 	$ldapfilter = "(|(ou=*)(cn=Users))";
 
@@ -1380,6 +1380,7 @@ function ldap_get_groups($username, $authcfg) {
 
 	/* connect and see if server is up */
 	$error = false;
+	ldap_setup_mtls($authcfg);
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
@@ -1391,7 +1392,6 @@ function ldap_get_groups($username, $authcfg) {
 
 	/* Setup CA environment if needed. */
 	ldap_setup_caenv($ldap, $authcfg);
-	ldap_setup_mtls($ldap, $authcfg);
 
 	ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 	ldap_set_option($ldap, LDAP_OPT_DEREF, LDAP_DEREF_SEARCHING);
@@ -1597,12 +1597,13 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 
 	/* Make sure we can connect to LDAP */
 	$error = false;
-	// ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
-	// ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, "/var/run/certs/");
-	// ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
-	//ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, "/var/run/certs/f03dd1db.crt");
+	/*ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
+	ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, "/var/run/certs/");
+	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+	ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, "/var/run/certs/f03dd1db.crt");
 	ldap_set_option(NULL, LDAP_OPT_X_TLS_CERTFILE, "/var/run/certs/229c13f4.crt");
-	ldap_set_option(NULL, LDAP_OPT_X_TLS_KEYFILE, "/var/run/certs/229c13f4.key");
+	ldap_set_option(NULL, LDAP_OPT_X_TLS_KEYFILE, "/var/run/certs/229c13f4.key");*/
+	ldap_setup_mtls($authcfg);
 	if (!($ldap = ldap_connect($ldapserver))) {
 		$error = true;
 	}
@@ -1613,7 +1614,6 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 
 	/* Setup CA environment if needed. */
 	ldap_setup_caenv($ldap, $authcfg);
-	ldap_setup_mtls($ldap, $authcfg);
 
 	ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 	ldap_set_option($ldap, LDAP_OPT_DEREF, LDAP_DEREF_SEARCHING);
