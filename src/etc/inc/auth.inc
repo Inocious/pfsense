@@ -1575,7 +1575,6 @@ function get_ldap_options($ldap) {
 	];
 
 	// Retrieve and display option values
-	echo "LDAP Options:\n";
 	foreach ($options as $option => $description) {
 	    $value = null;
 	    if (ldap_get_option($ldap, $option, $value)) {
