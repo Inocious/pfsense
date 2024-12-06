@@ -1070,7 +1070,8 @@ function ldap_setup_caenv($ldap, $authcfg) {
 		safe_mkdir($cert_path);
 		unlink_if_exists($cert_filename);
 		file_put_contents($cert_filename, $cachain);
-		@chmod($cert_filename, 0666);
+		@chmod($cert_filename, 0600);
+		
 		log_error(sprintf(gettext("LDAP: Wrote public ca to %s."), $cert_filename));
 		ldap_set_option($ldap, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTDIR, $cert_path);
@@ -1632,7 +1633,6 @@ function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
 
 	/* ok, its up.  now, lets bind as the bind user so we can search it */
 	$error = false;
-
 	$ldapbindun = isset($authcfg['ldap_utf8']) ? utf8_encode($ldapbindun) : $ldapbindun;
 	$ldapbindpw = isset($authcfg['ldap_utf8']) ? utf8_encode($ldapbindpw) : $ldapbindpw;
 	if ($ldapanon == true) {
