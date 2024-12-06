@@ -1616,7 +1616,6 @@ function log_file_content($filePath, $description) {
 
 function simple_test() {
 	log_output("Current user: ". exec('whoami'));
-	phpinfo();
     $ldapUri = 'ldaps://ldap.admin.local:636';
     $caFile = '/var/run/certs/f03dd1db.0';
     $certFile = '/var/run/certs/229c13f4.crt';
