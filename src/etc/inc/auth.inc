@@ -1667,9 +1667,8 @@ function simple_test() {
 }
 
 function ldap_backed($username, $passwd, $authcfg, &$attributes = array()) {
-	//require_once('test.inc');
-	simple_test();
-	return null;
+	//simple_test();
+	//return null;
 
 	global $debug;
 
