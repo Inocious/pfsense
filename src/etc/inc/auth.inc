@@ -1101,6 +1101,7 @@ function ldap_setup_mtls($authcfg) {
 		$mtls_cert['key'] = base64_decode($thiscert['prv']);
 		//log_error(sprintf(gettext("LDAP: Lookup CERT returned public cert as %s."), $mtls_cert['cert']));
 		//log_error(sprintf(gettext("LDAP: Lookup CERT returned private key as %s."), $mtls_cert['key']));
+
 		$cert_path = "{$g['varrun_path']}/certs";
 		$cert_filename = "{$cert_path}/{$cert_details['hash']}.crt";
 		$key_filename = "{$cert_path}/{$cert_details['hash']}.key";
@@ -1109,10 +1110,11 @@ function ldap_setup_mtls($authcfg) {
 		unlink_if_exists($key_filename);
 		file_put_contents($cert_filename, $mtls_cert['cert']);
 		file_put_contents($key_filename, $mtls_cert['key']);
-		log_error(sprintf(gettext("LDAP: Wrote public cert to %s."), $cert_filename));
-		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
 		@chmod($cert_filename, 0600);
 		@chmod($key_filename, 0400);
+
+		log_error(sprintf(gettext("LDAP: Wrote public cert to %s."), $cert_filename));
+		log_error(sprintf(gettext("LDAP: Wrote private key to %s."), $key_filename));
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_CERTFILE, $cert_filename);
 		ldap_set_option(NULL, LDAP_OPT_X_TLS_KEYFILE, $key_filename);
