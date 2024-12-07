@@ -631,7 +631,8 @@ $section->addInput(new Form_Checkbox(
  ));
 
  //TODO, no global cert exists as it does for Ca's. So incorrect, needs modify.
- $ldapClientCertRef = array('global' => 'Global Certs List');
+// $ldapClientCertRef = array('global' => 'Global Certs List');
+ $ldapClientCertRef = array();
  foreach (config_get_path('cert', []) as $cert) {
 	if (!preg_match('/^GUI default \(.+\)$/', $cert['descr'])) {
         $ldapClientCertRef[$cert['refid']] = $cert['descr']; // Skip modification if $cert['descr'] = 'GUI default (*)'
