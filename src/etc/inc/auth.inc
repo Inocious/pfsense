@@ -2444,8 +2444,8 @@ EOD;
 					$ldapconf .= "tls_cacertfile {$ldappamcafile}\n";
 				}
 				if (!empty($authcfg['ldap_clientcert'])) {
-					$ldappamcertfile = "/var/etc/pam_ldap_cert.crt";
-					$ldappamkeyfile = "/var/etc/pam_ldap_cert.key";
+					$ldappamcertfile = "/var/etc/pam_ldap_client_cert.pem";
+					$ldappamkeyfile = "/var/etc/pam_ldap_client_key.pem";
 					$thiscert = lookup_cert($authcfg['ldap_clientcert']);
 					$mtls_cert['cert'] = base64_decode($thiscert['crt']));
 					$mtls_cert['key'] = base64_decode($thiscert['prv']);
