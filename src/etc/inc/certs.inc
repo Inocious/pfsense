@@ -921,12 +921,13 @@ function is_unbound_cert($certref) {
 
 function is_ldap_mtls_cert($certref) {
 	foreach (config_get_path('system/authserver', []) as $authserver) {
-		//if (isset($authserver['ldap_mtls_enabled'])) {
+		return true;
+		/*if (isset($authserver['ldap_mtls_enabled'])) {
 			if (($authserver['ldap_clientcert'] == $certref) &&
 			    ($authserver['ldap_urltype'] != 'Standard TCP')) {
 				return true;
 			}
-		//}
+		}*/
 	}
 	return false;
 }
