@@ -303,7 +303,8 @@ if ($_POST['save']) {
 		$to_field = "{$pconfig['type']}_timeout";
 		if (isset($_POST[$to_field]) && !empty($_POST[$to_field]) && (!is_numeric($_POST[$to_field]) || (is_numeric($_POST[$to_field]) && ($_POST[$to_field] <= 0)))) {
 			$input_errors[] = sprintf(gettext("%s Timeout value must be numeric and positive."), strtoupper($pconfig['type']));
-		} elseif (isset($pconfig['ldap_mtls_enabled'])) {
+		}
+		if (isset($pconfig['ldap_mtls_enabled'])) {
 			if (empty($pconfig['ldap_clientcert'])) {
 				$input_errors[] = sprintf(gettext("%s mTLS can't be active without any Client TLS Certificate chosen."), strtoupper($pconfig['type']));
 			}
