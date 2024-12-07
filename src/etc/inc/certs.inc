@@ -921,12 +921,12 @@ function is_unbound_cert($certref) {
 
 function is_ldap_mtls_cert($certref) {
 	foreach (config_get_path('system/authserver', []) as $authserver) {
-		//if (isset($authserver['ldap_mtls_enabled'])) {
+		if (isset($authserver['ldap_mtls_enabled'])) {
 			if (($authserver['ldap_clientcert'] == $certref) &&
 			    ($authserver['ldap_urltype'] != 'Standard TCP')) {
 				return true;
 			}
-		//}
+		}
 	}
 	return false;
 }
@@ -941,7 +941,7 @@ function cert_in_use($certref) {
 		is_captiveportal_cert($certref) ||
 		is_unbound_cert($certref) ||
 		is_package_cert($certref) ||
-		is_ldap_mtls_cert($caref));
+		is_ldap_mtls_cert($certref));
 }
 
 function cert_usedby_description($refid, $certificates_used_by_packages) {
