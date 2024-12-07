@@ -2443,7 +2443,6 @@ EOD;
 					@file_put_contents($ldappamcafile, $cacrt);
 					$ldapconf .= "tls_cacertfile {$ldappamcafile}\n";
 				}
-				//TODO retrieve filename, $authcfg['ldap_clientkey']} is incorrect. Will fail.
 				if (!empty($authcfg['ldap_clientcert'])) {
 					$ldappamcertfile = "/var/etc/pam_ldap_cert.crt";
 					$ldappamkeyfile = "/var/etc/pam_ldap_cert.key";
@@ -2456,6 +2455,7 @@ EOD;
 					@chmod($ldappamkeyfile, 0400);
 					$ldapconf .= "tls_cert {$ldappamcertfile}\n";
 					$ldapconf .= "tls_key {$ldappamkeyfile}\n";
+					$ldapconf .= "tls_reqcert demand\n";
 				}
 				$ldapconf .= "tls_checkpeer yes\n";
 			}
