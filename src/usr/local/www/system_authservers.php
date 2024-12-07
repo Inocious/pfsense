@@ -634,7 +634,6 @@ $section->addInput(new Form_Checkbox(
 	$pconfig['ldap_mtls_enabled']
  ));
 
- //TODO, no global cert exists as it does for Ca's. So incorrect, needs modify.
  $ldapClientCertRef = array();
  foreach (config_get_path('cert', []) as $cert) {
 	if (!preg_match('/^GUI default \(.+\)$/', $cert['descr'])) {
