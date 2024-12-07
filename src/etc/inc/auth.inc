@@ -2445,8 +2445,17 @@ EOD;
 				}
 				//TODO retrieve filename, $authcfg['ldap_clientkey']} is incorrect. Will fail.
 				if (!empty($authcfg['ldap_clientcert'])) {
-					$ldapconf .= "tls_cert {$authcfg['ldap_clientcert']}\n";
-					$ldapconf .= "tls_key {$authcfg['ldap_clientkey']}\n";
+					$ldappamcertfile = "/var/etc/pam_ldap_cert.crt";
+					$ldappamkeyfile = "/var/etc/pam_ldap_cert.key";
+					$thiscert = lookup_cert($authcfg['ldap_clientcert']);
+					$mtls_cert['cert'] = base64_decode($thiscert['crt']));
+					$mtls_cert['key'] = base64_decode($thiscert['prv']);
+					@file_put_contents($ldappamcertfile, $mtls_cert['cert']);
+					@file_put_contents($ldappamkeyfile, $mtls_cert['key']);
+					@chmod($ldappamcertfile, 0600);
+					@chmod($ldappamkeyfile, 0400);
+					$ldapconf .= "tls_cert {$ldappamcertfile}\n";
+					$ldapconf .= "tls_key {$ldappamkeyfile}\n";
 				}
 				$ldapconf .= "tls_checkpeer yes\n";
 			}
