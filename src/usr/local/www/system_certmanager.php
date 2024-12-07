@@ -1480,6 +1480,9 @@ foreach ($a_cert as $cert):
 						<?php if (is_unbound_cert($cert['refid'])): ?>
 							<?=gettext("DNS Resolver")?>
 						<?php endif?>
+						<?php if (is_ldap_mtls_cert($cert['refid'])): ?>
+							<?=gettext("LDAP Server")?>
+						<?php endif?>
 						<?php echo cert_usedby_description($cert['refid'], $certificates_used_by_packages); ?>
 					</td>
 					<td>
